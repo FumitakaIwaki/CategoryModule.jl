@@ -1,5 +1,4 @@
 module CategoryModule
-
-greet() = print("Hello World!")
+include("./arrow.jl")
 
 end # module CategoryModule
