@@ -30,11 +30,7 @@ import CategoryModule: is_natural
     )
     G = x -> G_mapping[x]
 
-    t_mapping = Dict{Any, Arrow}(
-        (obj, Arrow(F(obj), G(obj))) for obj in C.objects
-    )
-
-    @test is_natural(C, t_mapping, F_mapping, G_mapping)
+    @test is_natural(C, F_mapping, G_mapping)
 
     G_mapping = Dict{Any, Any}(
         "a" => "d",
@@ -49,5 +45,5 @@ import CategoryModule: is_natural
     )
     G = x -> G_mapping[x]
 
-    @test !is_natural(C, t_mapping, F_mapping, G_mapping)
+    @test !is_natural(C, F_mapping, G_mapping)
 end
