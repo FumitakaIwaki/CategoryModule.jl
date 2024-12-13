@@ -34,6 +34,17 @@ mutable struct ThinCategory <: AbstractCategory
         end
         new(objects, arrows)
     end
+    # 辺リストのMatrixを入力として生成
+    function ThinCategory(arrows::Array)
+        arrows = copy(arrows)
+        objects = Set(arrows)
+        arrows = Set([Arrow(dom, cod) for (dom, cod) in eachrow(arrows)])
+        # 恒等射の追加
+        for object in objects
+            push!(arrows, Arrow(object, object))
+        end
+        new(objects, arrows)
+    end
 end
 
 # シャローコピー
@@ -58,6 +69,20 @@ end
 
 # 射の合成をする関数
 # 可能な合成を全て実施
+function compose(C::ThinCategory)::ThinCategory
+    C = copy(C)
+    for arrow1 in C.arrows
+        for arrow2 in Set(arrow for arrow in C.arrows if arrow.dom == arrow1.cod)
+            # すでに射がある場合は除外
+            if !has_arrow(C, arrow1.dom, arrow2.cod)
+                # 射の追加
+                push!(C.arrows, Arrow(arrow1.dom, arrow2.cod))
+            end
+        end
+    end
+    return C
+end
+# 同様の処理を破壊的に
 function compose!(C::ThinCategory)
     for arrow1 in C.arrows
         for arrow2 in Set(arrow for arrow in C.arrows if arrow.dom == arrow1.cod)
