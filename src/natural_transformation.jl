@@ -1,7 +1,12 @@
-# 関手の対応づけが自然変換をなしているかを判定する関数
-function is_natural(C::ThinCategory, t_mapping::Dict{Any, Arrow}, F_mapping::Dict{Any, Any}, G_mapping::Dict{Any, Any})::Bool
+# 2つの関手が自然変換をなしているかを判定する関数
+function is_natural(C::ThinCategory, F_mapping::Dict{Any, Any}, G_mapping::Dict{Any, Any})::Bool
     F = x -> F_mapping[x]
     G = x -> G_mapping[x]
+
+    # 自然変換
+    t_mapping = Dict{Any, Arrow}(
+        (obj, Arrow(F(obj), G(obj))) for obj in C.objects
+    )
     t = x -> t_mapping[x]
     for arrow in C.arrows
         # 合成可能か & 可換性を満たしているか
