@@ -2,8 +2,8 @@ using CategoryModule
 
 function main()
     # 圏の定義と射の合成
-    C = compose(ThinCategory(["a" "b"; "b" "c"]))
-    D = compose(ThinCategory(["d" "e";]))
+    C = compose(ThinCategory(["A" "B"; "B" "C"]))
+    D = compose(ThinCategory(["D" "E";]))
     # 関手の列挙
     functors = find_functors(C, D)
     # 関手の辞書
