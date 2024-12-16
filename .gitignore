@@ -1,3 +1,6 @@
+.DS_store
 .vscode/
+
+Manifest.toml
 dev.ipynb
 doc/
