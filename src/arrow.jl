@@ -1,9 +1,13 @@
 # 射の構造体
-mutable struct Arrow
-    dom::Any # 域 (domain)
-    cod::Any # 余域 (codomain)
+mutable struct Arrow{T}
+    dom::T # 域 (domain)
+    cod::T # 余域 (codomain)
     # 内部コンストラクタ
-    Arrow(dom::Any, cod::Any) = new(dom, cod)
+    Arrow(dom::Any, cod::Any) = new{Any}(dom, cod)
+    Arrow(dom::Int, cod::Int) = new{Int}(dom, cod)
+    Arrow(dom::String, cod::String) = new{String}(dom, cod)
+    Arrow(dom::Float64, cod::Float64) = new{Float64}(dom, cod)
+    Arrow(dom::Symbol, cod::Symbol) = new{Symbol}(dom, cod)
 end
 
 # 等価性の定義
