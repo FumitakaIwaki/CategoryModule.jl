@@ -18,5 +18,3 @@ function is_natural(C::ThinCategory, F_mapping::Dict{Any, Any}, G_mapping::Dict{
     end
     return true
 end
-
-∉

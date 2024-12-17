@@ -3,11 +3,11 @@ abstract type AbstractCategory end
 # 痩せた圏
 mutable struct ThinCategory <: AbstractCategory
     objects::Set{Any}
-    arrows::Set{Arrow}
+    arrows::Set{<:Arrow}
 
     # 内部コンストラクタ
     # 対象と射を入力として生成
-    function ThinCategory(objects::Set, arrows::Set{Arrow})
+    function ThinCategory(objects::Set, arrows::Set{<:Arrow})
         arrows = copy(arrows)
         # 恒等射の追加
         for object in objects
@@ -25,7 +25,7 @@ mutable struct ThinCategory <: AbstractCategory
         new(objects, arrows)
     end
     # 射のみを入力として生成
-    function ThinCategory(arrows::Set{Arrow})
+    function ThinCategory(arrows::Set{<:Arrow})
         arrows = copy(arrows)
         objects = Set([arrow.dom for arrow in arrows]) ∪ Set([arrow.cod for arrow in arrows])
         # 恒等射の追加
@@ -58,12 +58,12 @@ function has_arrow(C::ThinCategory, dom::Any, cod::Any)::Bool
 end
 
 # 圏の恒等射を取得する関数
-function get_identity_arrows(C::ThinCategory)::Set{Arrow}
+function get_identity_arrows(C::ThinCategory)::Set{<:Arrow}
     return Set(arrow for arrow in C.arrows if arrow.dom == arrow.cod)
 end
 
 # 圏の恒等射以外を取得する関数
-function get_non_identity_arrows(C::ThinCategory)::Set{Arrow}
+function get_non_identity_arrows(C::ThinCategory)::Set{<:Arrow}
     return Set(arrow for arrow in C.arrows if arrow.dom != arrow.cod)
 end
 
